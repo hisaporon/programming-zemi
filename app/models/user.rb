@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    has_many :tweets, dependent: :destroy
     #データを保存する前にメアドを小文字にする。
     before_save { email.downcase! } 
     # name は必ず存在し、長さが50字以内であること
@@ -12,5 +13,5 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
     has_secure_password
-    validates :password, presence: true, length: { minimum: 6 }
+    validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 end
